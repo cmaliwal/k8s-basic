@@ -252,3 +252,15 @@ package-lock.json
 package.json
 test
 ```
+
+### Check log of pod:
+
+```
+kubectl logs nodehelloworld.example.com
+```
+
+### Debug the pod:
+
+```
+kubectl exec -it nodehelloworld.example.com bash
+``
