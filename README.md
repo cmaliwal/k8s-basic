@@ -161,3 +161,74 @@ output:
 ```
 Hello World!
 ```
+
+### Describe service:
+
+```
+kubectl describe service helloworld-service
+```
+
+Output:
+
+```
+Name:                     helloworld-service
+Namespace:                default
+Labels:                   app=helloworld
+Annotations:              <none>
+Selector:                 app=helloworld
+Type:                     NodePort
+IP:                       10.110.176.108
+Port:                     <unset>  3000/TCP
+TargetPort:               3000/TCP
+NodePort:                 <unset>  30740/TCP
+Endpoints:                172.17.0.4:3000
+Session Affinity:         None
+External Traffic Policy:  Cluster
+Events:                   <none>
+```
+
+```
+kubectl run -i --tty busybox --image=busybox --restart=Never -- sh
+```
+
+output: 
+
+```
+/ #
+telnet 172.17.0.4:3000
+
+Connected to 172.17.0.4:3000
+
+GET /
+
+HTTP/1.1 200 OK
+X-Powered-By: Express
+Content-Type: text/html; charset=utf-8
+Content-Length: 12
+ETag: W/"c-Lve95gjOVATpfV8EL5X4nxwjKHE"
+Date: Sat, 15 Jun 2019 06:44:26 GMT
+Connection: close
+
+Hello World!Connection closed by foreign host
+```
+
+
+
+#### Execute command on pod:
+
+```
+kubectl exec nodehelloworld.example.com -- ls /app
+```
+
+Output:
+```
+Dockerfile
+README.md
+docker-compose.yml
+index-db.js
+index.js
+node_modules
+package-lock.json
+package.json
+test
+```
