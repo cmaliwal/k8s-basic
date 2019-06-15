@@ -49,3 +49,115 @@ output:
 ```
 latest: digest: sha256:77b86d1d3750876d4170c612d74b565faaa72f3a2963d85b73bf83276bb2f7c7 size: 2420
 ```
+
+
+
+### Run your first app on kubernet:
+
+
+##### Create a pod:
+
+>>> kubectl create -f pod-helloworld.yml 
+
+output:
+
+```
+pod/nodehelloworld.example.com created
+```
+
+>>> kubectl get pod
+
+output:
+
+```
+NAME                         READY   STATUS              RESTARTS   AGE
+nodehelloworld.example.com   0/1     ContainerCreating   0          2m41s
+```
+
+#### Describe the pod:
+
+>>> kubectl describe pod nodehelloworld.example.com
+
+output:
+
+```
+Name:               nodehelloworld.example.com
+Namespace:          default
+Priority:           0
+PriorityClassName:  <none>
+Node:               minikube/10.0.2.15
+Start Time:         Sat, 15 Jun 2019 11:30:37 +0530
+Labels:             app=helloworld
+Annotations:        <none>
+Status:             Running
+IP:                 172.17.0.4
+Containers:
+  k8s-demo:
+    Container ID:   docker://0546573b2f787ed21661227305b2f6820df87370a0a09ba2b4a530d13582f753
+    Image:          cmaliwal/docker-demo
+    Image ID:       docker-pullable://cmaliwal/docker-demo@sha256:77b86d1d3750876d4170c612d74b565faaa72f3a2963d85b73bf83276bb2f7c7
+    Port:           3000/TCP
+    Host Port:      0/TCP
+    State:          Running
+      Started:      Sat, 15 Jun 2019 11:33:31 +0530
+    Ready:          True
+    Restart Count:  0
+    Environment:    <none>
+    .....
+.....
+....
+```
+
+#### Port forward:
+
+>>> kubectl port-forward nodehelloworld.example.com 8081:3000
+
+output:
+
+```
+Forwarding from 127.0.0.1:8081 -> 3000
+Forwarding from [::1]:8081 -> 3000
+```
+
+>>> curl localhost:8081
+
+output:
+
+```
+Hello World!
+```
+
+#### Expose:
+
+>> kubectl expose pod nodehelloworld.example.com --type=NodePort --name=helloworld-service
+
+output:
+
+```
+service/helloworld-service exposed
+```
+
+>> minikube service helloworld-service --url
+
+outoput:
+
+```
+http://192.168.99.101:30740
+```
+
+>> kubectl get service
+
+output:
+
+```
+NAME                 TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)          AGE
+helloworld-service   NodePort    10.110.176.108   <none>        3000:30740/TCP   4m30s
+```
+
+>> curl http://192.168.99.101:30740
+
+output:
+
+```
+Hello World!
+```
