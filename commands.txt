@@ -1,0 +1,12 @@
+### Get pods with lables:
+
+```
+kubectl get pods --show-labels
+```
+
+Output:
+
+```
+NAME                          READY   STATUS    RESTARTS   AGE     LABELS
+helloworld-controller-dhdsf   1/1     Running   0          25m     app=helloworld
+```
