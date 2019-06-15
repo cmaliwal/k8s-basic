@@ -1,6 +1,8 @@
 ### Build the docker image:
 
->> docker build .
+```
+docker build .
+```
 
 output:
 
@@ -21,7 +23,9 @@ Successfully built b49c509c2c4e
 
 ### run docker image:
 
->> docker run -p 3000:3000 -it b49c509c2c4e
+```
+docker run -p 3000:3000 -it b49c509c2c4e
+```
 
 output:
 
@@ -29,7 +33,9 @@ output:
 Example app listening at http://:::3000
 ```
 
->>> curl localhost:3000
+```
+curl localhost:3000
+```
 
 output:
 ```
@@ -38,11 +44,11 @@ Hello World
 
 ### Push your image to docker registry:
 
->> docker login
-
->> docker tag <image id> username/docker-demo
-
->> docker push username/docker-demo
+```
+docker login
+docker tag <image id> username/docker-demo
+docker push username/docker-demo
+```
 
 output:
 
@@ -50,14 +56,14 @@ output:
 latest: digest: sha256:77b86d1d3750876d4170c612d74b565faaa72f3a2963d85b73bf83276bb2f7c7 size: 2420
 ```
 
-
-
 ### Run your first app on kubernet:
 
 
 ##### Create a pod:
 
->>> kubectl create -f pod-helloworld.yml 
+```
+kubectl create -f pod-helloworld.yml 
+```
 
 output:
 
@@ -65,7 +71,9 @@ output:
 pod/nodehelloworld.example.com created
 ```
 
->>> kubectl get pod
+```
+kubectl get pod
+```
 
 output:
 
@@ -76,7 +84,9 @@ nodehelloworld.example.com   0/1     ContainerCreating   0          2m41s
 
 #### Describe the pod:
 
->>> kubectl describe pod nodehelloworld.example.com
+```
+kubectl describe pod nodehelloworld.example.com
+```
 
 output:
 
@@ -110,7 +120,9 @@ Containers:
 
 #### Port forward:
 
->>> kubectl port-forward nodehelloworld.example.com 8081:3000
+```
+kubectl port-forward nodehelloworld.example.com 8081:3000
+```
 
 output:
 
@@ -119,7 +131,9 @@ Forwarding from 127.0.0.1:8081 -> 3000
 Forwarding from [::1]:8081 -> 3000
 ```
 
->>> curl localhost:8081
+```
+curl localhost:8081
+```
 
 output:
 
@@ -129,7 +143,9 @@ Hello World!
 
 #### Expose:
 
->> kubectl expose pod nodehelloworld.example.com --type=NodePort --name=helloworld-service
+```
+kubectl expose pod nodehelloworld.example.com --type=NodePort --name=helloworld-service
+```
 
 output:
 
@@ -137,7 +153,9 @@ output:
 service/helloworld-service exposed
 ```
 
->> minikube service helloworld-service --url
+```
+minikube service helloworld-service --url
+```
 
 outoput:
 
@@ -145,7 +163,9 @@ outoput:
 http://192.168.99.101:30740
 ```
 
->> kubectl get service
+```
+kubectl get service
+```
 
 output:
 
@@ -154,7 +174,9 @@ NAME                 TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)         
 helloworld-service   NodePort    10.110.176.108   <none>        3000:30740/TCP   4m30s
 ```
 
->> curl http://192.168.99.101:30740
+```
+curl http://192.168.99.101:30740
+```
 
 output:
 
@@ -211,8 +233,6 @@ Connection: close
 
 Hello World!Connection closed by foreign host
 ```
-
-
 
 #### Execute command on pod:
 
