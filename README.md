@@ -263,4 +263,16 @@ kubectl logs nodehelloworld.example.com
 
 ```
 kubectl exec -it nodehelloworld.example.com bash
-``
+```
+
+### Delete any pod
+
+```
+kubectl delete pods busybox
+```
+
+output:
+
+```
+pod "busybox" deleted
+```
