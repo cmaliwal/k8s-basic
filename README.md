@@ -276,3 +276,21 @@ output:
 ```
 pod "busybox" deleted
 ```
+
+
+### Replicas:
+
+```
+kubectl scale --replicas=4 -f helloworld-repl-controller.yml
+```
+
+``` 
+kubectl get rc
+```
+
+output:
+
+```
+NAME                    DESIRED   CURRENT   READY   AGE
+helloworld-controller   2         2         2       4m22s
+```
