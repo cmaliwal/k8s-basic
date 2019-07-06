@@ -442,6 +442,7 @@ output:
 secret/db-secrets created
 ```
 
+
 ```
 kubectl create -f helloworld-secrets-volumes.yml 
 ```
@@ -479,4 +480,10 @@ passwordroot
 
 @helloworld-deployment-546fb855fd-lqkdj:/etc/creds# cat username 
 root
+```
+
+### Delete the Deployment:
+
+```
+kubectl delete -f helloworld-healthcheck.ym
 ```
