@@ -335,3 +335,90 @@ output:
 ```
 deployment "helloworld-deployment" successfully rolled out
 ```
+
+### Health checks 
+
+```
+kubectl create -f helloworld-healthcheck.yml 
+```
+Output:
+
+```
+deployment.extensions/helloworld-deployment created
+```
+
+```
+kubectl get pod
+```
+
+```
+NAME                                     READY   STATUS              RESTARTS   AGE
+helloworld-deployment-75d56c5db4-cbz4q   0/1     ContainerCreating   0          17s
+helloworld-deployment-75d56c5db4-wzzkb   1/1     Running             0          17s
+helloworld-deployment-75d56c5db4-xlrmh   1/1     Running             0          17s
+```
+
+```
+kubectl describe pod helloworld-deployment-75d56c5db4-cbz4q
+```
+
+output:
+
+```
+Name:               helloworld-deployment-75d56c5db4-cbz4q
+Namespace:          default
+Priority:           0
+PriorityClassName:  <none>
+Node:               minikube/10.0.2.15
+Start Time:         Sat, 06 Jul 2019 14:02:15 +0530
+Labels:             app=helloworld
+                    pod-template-hash=75d56c5db4
+Annotations:        <none>
+Status:             Running
+IP:                 172.17.0.7
+Controlled By:      ReplicaSet/helloworld-deployment-75d56c5db4
+Containers:
+  k8s-demo:
+    Container ID:   docker://6249ddc790b28dac9c4e6516cbf5219f21ebf4d7354ea21b3945fea28b1b1276
+    Image:          cmaliwal/docker-demo
+    Image ID:       docker-pullable://cmaliwal/docker-demo@sha256:77b86d1d3750876d4170c612d74b565faaa72f3a2963d85b73bf83276bb2f7c7
+    Port:           3000/TCP
+    Host Port:      0/TCP
+    State:          Running
+      Started:      Sat, 06 Jul 2019 14:02:32 +0530
+    Ready:          True
+    Restart Count:  0
+    Liveness:       http-get http://:nodejs-port/ delay=15s timeout=30s period=10s #success=1 #failure=3
+    Environment:    <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from default-token-v8zbh (ro)
+Conditions:
+  Type              Status
+  Initialized       True 
+  Ready             True 
+  ContainersReady   True 
+  PodScheduled      True 
+Volumes:
+  default-token-v8zbh:
+    Type:        Secret (a volume populated by a Secret)
+    SecretName:  default-token-v8zbh
+    Optional:    false
+QoS Class:       BestEffort
+Node-Selectors:  <none>
+Tolerations:     node.kubernetes.io/not-ready:NoExecute for 300s
+                 node.kubernetes.io/unreachable:NoExecute for 300s
+Events:
+  Type    Reason     Age   From               Message
+  ----    ------     ----  ----               -------
+  Normal  Scheduled  17m   default-scheduler  Successfully assigned default/helloworld-deployment-75d56c5db4-cbz4q to minikube
+  Normal  Pulling    17m   kubelet, minikube  Pulling image "cmaliwal/docker-demo"
+  Normal  Pulled     17m   kubelet, minikube  Successfully pulled image "cmaliwal/docker-demo"
+  Normal  Created    17m   kubelet, minikube  Created container k8s-demo
+  Normal  Started    17m   kubelet, minikube  Started container k8s-demo
+```
+
+### Edit the deployment
+
+```
+kubectl edit deployment/helloworld-deployment
+```
