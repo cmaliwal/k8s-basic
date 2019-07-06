@@ -485,5 +485,5 @@ root
 ### Delete the Deployment:
 
 ```
-kubectl delete -f helloworld-healthcheck.ym
-```
+kubectl delete -f helloworld-healthcheck.yml
+```               
