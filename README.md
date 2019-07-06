@@ -422,3 +422,61 @@ Events:
 ```
 kubectl edit deployment/helloworld-deployment
 ```
+
+### Generate Secrets 
+
+```
+$ echo -n "root" | base64
+cm9vdA==
+
+$ echo -n "password" | base64
+cGFzc3dvcmQ=
+```
+
+```
+kubectl create -f helloworld-secrets.yml
+```
+
+output:
+```
+secret/db-secrets created
+```
+
+```
+kubectl create -f helloworld-secrets-volumes.yml 
+```
+
+output:
+```
+deployment.extensions/helloworld-deployment created
+```
+
+```
+kubectl get pods
+```
+
+Output:
+
+```
+NAME                                     READY   STATUS              RESTARTS   AGE
+helloworld-deployment-546fb855fd-lqkdj   0/1     ContainerCreating   0          21s
+helloworld-deployment-546fb855fd-nbrjk   1/1     Running             0          21s
+helloworld-deployment-546fb855fd-r42d4   1/1     Running             0          21s
+```
+
+```
+kubectl exec -it helloworld-deployment-546fb855fd-lqkdj bash
+
+root@helloworld-deployment-546fb855fd-lqkdj:/app# ls
+Dockerfile  README.md  docker-compose.yml  index-db.js	index.js  node_modules	package-lock.json  package.json  test
+
+root@helloworld-deployment-546fb855fd-lqkdj:/app# cd /etc/creds/
+root@helloworld-deployment-546fb855fd-lqkdj:/etc/creds# ls
+password  username
+
+cat password 
+passwordroot
+
+@helloworld-deployment-546fb855fd-lqkdj:/etc/creds# cat username 
+root
+```
